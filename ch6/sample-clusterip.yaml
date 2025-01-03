@@ -4,10 +4,13 @@ metadata:
   name: sample-clusterip
 spec:
   type: ClusterIP
+  # Used as a load balancer in an environment where there is no need to receive traffic from outside the cluster.
   ports:
   - name: "http-port"
     protocol: "TCP"
     port: 8080
+    # Used as listening port on ClusterIp
     targetPort: 80
+    # Used as target container port on ClusterIp
   selector:
     app: sample-app
