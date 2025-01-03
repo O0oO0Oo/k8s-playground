@@ -4,7 +4,7 @@ metadata:
   name: sample-clusterip-vip
 spec:
   type: ClusterIP
-  # static assignment of virtual IP of ClusterIP
+  # sstatic assignment of virtual IP of ClusterIP
   clusterIP: 10.96.0.100
   ports:
   - name: "http-port"
