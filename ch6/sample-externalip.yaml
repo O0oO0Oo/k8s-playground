@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # The externalIp service can communicate with external traffic coming from a specific IP port.
+  name: sample-externalip
+spec:
+  type: ClusterIP
+  # IP address of the k8s node
+  externalIPs:
+    - 192.168.49.2
+  ports:
+    - name: "http-port"
+      protocol: "TCP"
+      port: 8080
+      targetPort: 80
+  selector:
+    app: sample-app
+
+#dev@DESKTOP-GCJUTAU:~/git/k8s-playground/ch6$ kubectl get services
+#NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP    PORT(S)    AGE
+#kubernetes                  ClusterIP   10.96.0.1        <none>         443/TCP    21d
+#sample-clusterip            ClusterIP   10.97.80.139     <none>         8080/TCP   4d
+#sample-clusterip-vip        ClusterIP   10.96.0.100      <none>         8080/TCP   2d23h
+#sample-externalip           ClusterIP   10.100.44.90     192.168.49.2   8080/TCP   100s --> external-ip

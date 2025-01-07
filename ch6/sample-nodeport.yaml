@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # NodePort can communicate with the outside world by sending traffic received from the IP address:port of all Kubernetes nodes to the container.
+  name: sample-nodeport
+spec:
+  type: NodePort
+  ports:
+  - name: "http-port"
+    protocol: "TCP"
+    port: 8080
+    targetPort: 80
+    # The port range for k8s environments is 30000 to 32767 (k8s default).
+    # If you try to use a different port, an error will occur.
+    # If you can change the master settings in k8s, you can customize this range.
+    # Multiple identical node ports cannot be used by the same service.
+    nodePort: 30080
+  selector:
+    app: sample-app
+
+#dev@DESKTOP-GCJUTAU:~/git/k8s-playground/ch6$ kubectl get nodes -o wide
+#NAME       STATUS   ROLES           AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION                       CONTAINER-RUNTIME
+#minikube   Ready    control-plane   21d   v1.31.0   192.168.49.2   <none>        Ubuntu 22.04.4 LTS   5.15.167.4-microsoft-standard-WSL2   docker://27.2.0  
+#dev@DESKTOP-GCJUTAU:~/git/k8s-playground/ch6$ curl -s http://192.168.49.2:30080
+#Host=192.168.49.2  Path=/  From=sample-deployment-d68df7d7-fg2t6  ClientIP=10.244.0.1  XFF=
+#dev@DESKTOP-GCJUTAU:~/git/k8s-playground/ch6$ curl -s http://192.168.49.2:30080
+#Host=192.168.49.2  Path=/  From=sample-deployment-d68df7d7-x2qsj  ClientIP=10.244.0.1  XFF=
+#dev@DESKTOP-GCJUTAU:~/git/k8s-playground/ch6$ curl -s http://192.168.49.2:30080
+#Host=192.168.49.2  Path=/  From=sample-deployment-d68df7d7-fg2t6  ClientIP=10.244.0.1  XFF=
+
