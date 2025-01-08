@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-service-topology
+spec:
+  type: ClusterIP
+  selector:
+    app: sample-app
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 80
+  # topology-aware routing
+  totologyKeys:
+  # If there is no pod with a label like 'kubernetes.io/hostname,' check the following conditions
+  - kubernetes.io/hostname
+  - "*"

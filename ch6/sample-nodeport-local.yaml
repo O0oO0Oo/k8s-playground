@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-nodeport-local
+spec:
+  type: NodePort
+  # when don't want to send it to a pod on another node(default = {cluster})
+  externalTrafficPolicy: Local
+  ports:
+  - name: http-port
+    protocol: TCP
+    port: 8080
+    targetPort: 80
+    nodePort: 30081
+  selector:
+    app: sample-app
