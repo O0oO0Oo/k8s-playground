@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # In the case of a StatefulSet, make it the same as the spec.serviceName of the StatefulSet
+  name: sample-headless
+spec:
+  # Conditions(1) for creating a clusterIP
+  type: ClusterIP
+  # Conditions(2) for creating a clusterIP
+  clusterIP: None
+  ports:
+  - name: http-port
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: sample-app
