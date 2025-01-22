@@ -1,0 +1,17 @@
+apiVerions: v1
+kind: PersistentVolume
+metadata:
+  name: sample-pv
+  labels: # lable
+    type: gce-pv
+  environment: stg
+spec:
+  capacity: # capacity
+    storage: 10Gi
+  accessModes: # access mode
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain # reclaim policy
+  storageClassName: manual
+  gcePersistentDisk:
+    pdName: sample-gce-pv
+    fsType: ext4

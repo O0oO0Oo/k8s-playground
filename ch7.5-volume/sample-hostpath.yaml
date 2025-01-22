@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-hostpath
+spec:
+  containers:
+  - image: nginx:1.16
+    name: nginx-container
+    volumeMounts:
+    - mountPath: /srv
+      name: hostpath-sample
+  volumes:
+  - name: hostpath-sample
+    # HostPath is a plug-in that maps areas on Kubernetes nodes to containers
+    hostPath:
+      path: /etc
+      type: DirectoryOrCreate
